@@ -7,32 +7,35 @@ Validate forms
   Use the method validateForm(selector)
 
 Class:
-  validate-required
-  validate-number
-  validate-email
-  validate-url
-  validate-date
-  validate-past-date # For dates such as birthdays, must be a future date. right?
+*   validate-required
+*   validate-number
+*   validate-email
+*   validate-url
+*   validate-date
+*   validate-past-date # For dates such as birthdays, must be a future date. right?
 
-example:
-  HTML:
-  <form id="myForm">
-  <input type="text" class="validate-required"/>
-    <input type="email" class="validate-required validate-email"/>
-    <input type="text" class="validate-url"/>
-    <input type="submit" value="Save" />
+example:  
+HTML:
+```
+  <form id="myForm">  
+      <input type="text" class="validate-required"/>
+      <input type="email" class="validate-required validate-email"/>
+      <input type="text" class="validate-url"/>
+      <input type="submit" value="Save" />
   </form>
+```  
   
-  Script:
-    $(function(){
-      var selector = '#myForm';
-      $(selector).submit(function(){
-        if(validateForm(selector)) {
-          return true;
-        } else {
-          // Ah! I think there are some errors in your input
-          return false;
-        }
-      });
-    });
-  
+  Javascript:
+```
+     $(function(){  
+         var selector = '#myForm';
+         $(selector).submit(function(){  
+             if(validateForm(selector)) {
+                 return true;
+             } else {  
+                 // Ah! I think there are some errors in your input
+                 return false; 
+             }  
+         });  
+     });  
+``` 
