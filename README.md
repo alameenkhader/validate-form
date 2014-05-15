@@ -4,7 +4,7 @@ validate-form
 Validate Your Forms with ease
 
 Validate forms
-  Use the method validateForm(selector)
+  Use the method ```validateForm(selector)```
 
 Class:
 *   validate-required
