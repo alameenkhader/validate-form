@@ -1,13 +1,13 @@
 /*
 	Validate forms
-	Use the method validateForm(selector)
+	User the method validateForm(selector)
 	Class:
 		validate-required
 		validate-number
 		validate-email
 		validate-url
 		validate-date
-		validate-past-date # For dates such as birthdays, must be a future date. right?
+		validate-past-date
 
 	example:
 		HTML:
@@ -15,23 +15,24 @@
 				<input type="text" class="validate-required"/>
 				<input type="email" class="validate-required validate-email"/>
 				<input type="text" class="validate-url"/>
-				<input type="submit" value="Save" />
 			</form>
 		Script:
 			validateForm('#myForm');
+
+	See more
+		https://github.com/alameenkhader/validate-form
 */
 
 var validateForm = function(selector) {
 	var $form = $(selector);
 	var $formFields = $form.find('select, input, textarea')
-		.not(':input[type=button], :input[type=submit], :input[type=reset], :input.select2-input, select.select2, select.selected-skills'		);
+		.not(':input[type=button], :input[type=submit], :input[type=reset], :input.select2-input, select.select2, select.selected-skills');
 
 	validate.errorFields = [];
-	
 	$('.validate-error').remove();
 
 	$.each($formFields, function(i, field) {
-		if(!($(field).hasClass('hidden_el'))) { // Do not validate hidden fields.
+		if($(field).is(':visible')) { // Do not validate hidden fields.
 			validate.field(field);
 		}
 	});
@@ -61,25 +62,30 @@ var validate = {
 		this.date(options);
 		this.pastDate(options);
 	},
+
 	markAsErrorField: function(options) {
 		options.field.object.after('<label class="validate-error">' + options.message + '</label>');
 		this.errorFields.push(options.field.object);
 	},
+
 	required: function(field) { //To validate presense of required field
 		if(this.isValidField(field.object) && field.object.hasClass('validate-required') && field.isEmpty) {
 			this.markAsErrorField({ field: field, message: 'This field is required.' });
 		}	
 	},
+
 	email: function(field) {
 		if(!field.isEmpty && this.isValidField(field.object) && field.object.hasClass('validate-email') && !this.isValidEmail(field.val)) {
 			this.markAsErrorField({ field: field, message: 'Invalid email.' });
 		}	
 	},
+
 	url: function(field) {
 		if(!field.isEmpty && this.isValidField(field.object) && field.object.hasClass('validate-url') && !this.isValidUrl(field.val)) {
 			this.markAsErrorField({ field: field, message: 'Invalid url.' });
 		}	
 	},
+
 	number: function(field, minlength) {
 		if(!field.isEmpty && this.isValidField(field.object) && field.object.hasClass('validate-number')) {
 			if(!this.isValidNumber(field.val)) {
@@ -87,30 +93,37 @@ var validate = {
 			} 
 		} 
 	},
+
 	date: function(field) {
 		if(!field.isEmpty && this.isValidField(field.object) && field.object.hasClass('validate-date') && !this.isValidDate(field.val)) {
 			this.markAsErrorField({ field: field, message: 'Invalid Date.' });
 		}
 	},
+
 	pastDate: function(field) {
 		if(!field.isEmpty && this.isValidField(field.object) && field.object.hasClass('validate-past-date') && !this.isValidPastDate(field.val)) {
 			this.markAsErrorField({ field: field, message: 'Invalid Date.' });
 		}
 	},
+
 	isValidEmail: function(str) {
 		var lastAtPos = str.lastIndexOf('@');
 	    var lastDotPos = str.lastIndexOf('.');
 	    return (lastAtPos < lastDotPos && lastAtPos > 0 && str.indexOf('@@') == -1 && lastDotPos > 2 && (str.length - lastDotPos) > 2);
 	},
+
 	isValidField: function($field) {
 		return ($.inArray($field, this.errorFields) < 0);
 	},
+
 	isValidUrl: function(str) {
 		return /^(?:(?:https?|ftp):\/\/)(?:\S+(?::\S*)?@)?(?:(?!10(?:\.\d{1,3}){3})(?!127(?:\.\d{1,3}){3})(?!169\.254(?:\.\d{1,3}){2})(?!192\.168(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]+-?)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]+-?)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:\/[^\s]*)?$/i.test(str);
 	},
+
 	isValidNumber: function(str) {
 		return !isNaN(str);
 	},
+
 	isValidDate: function(dateStr) {
 		// Checks for the following valid date formats:
 		// MM/DD/YYYY
@@ -155,8 +168,10 @@ var validate = {
 		}
 		return true;  // date is valid
 	},
+
 	isValidPastDate: function(dateStr) {
 		// First check whether it is a valid date or not
 		return (this.isValidDate && ( new Date(dateStr) < new Date() ) );
-	}	
+	}
+
 };
