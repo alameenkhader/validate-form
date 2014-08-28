@@ -68,7 +68,7 @@ var validate = {
 		this.errorFields.push(options.field.object);
 	},
 
-	required: function(field) { //To validate presense of required field
+	required: function(field) { // To validate presense of required field
 		if(this.isValidField(field.object) && field.object.hasClass('validate-required') && field.isEmpty) {
 			this.markAsErrorField({ field: field, message: 'This field is required.' });
 		}	
@@ -133,7 +133,6 @@ var validate = {
 		var matchArray = dateStr.match(datePat); // is the format ok?
 		if (matchArray == null) 
 		{
-			//alert("Date must be in MM/DD/YYYY format")
 			return false;
 		}
 	 
@@ -143,17 +142,14 @@ var validate = {
 		if (month < 1 || month > 12) 
 		{ 
 			// check month range
-			// alert("Month must be between 1 and 12");
 			return false;
 		}
 		if (day < 1 || day > 31) 
 		{
-			//alert("Day must be between 1 and 31");
 			return false;
 		}
 		if ((month==4 || month==6 || month==9 || month==11) && day==31) 
 		{
-			//alert("Month "+month+" doesn't have 31 days!")
 			return false;
 		}
 		if (month == 2) 
@@ -162,7 +158,6 @@ var validate = {
 			var isleap = (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0));
 			if (day>29 || (day==29 && !isleap)) 
 			{
-				//alert("February " + year + " doesn't have " + day + " days!");
 				return false;
 			}
 		}
