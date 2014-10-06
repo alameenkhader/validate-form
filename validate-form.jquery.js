@@ -53,7 +53,7 @@ var validate = {
 			object: $(field),
 			val: $(field).val().trim(),
 			valLength: $(field).val().trim().length,
-			isEmpty: ($(field).val().trim().length < 1)
+			isEmpty: this.isEmpty(field)
 		};
 		this.required(options);
 		this.email(options);
@@ -71,27 +71,27 @@ var validate = {
 	required: function(field) { // To validate presense of required field
 		if(this.isValidField(field.object) && field.object.hasClass('validate-required') && field.isEmpty) {
 			this.markAsErrorField({ field: field, message: 'This field is required.' });
-		}	
+		}
 	},
 
 	email: function(field) {
 		if(!field.isEmpty && this.isValidField(field.object) && field.object.hasClass('validate-email') && !this.isValidEmail(field.val)) {
 			this.markAsErrorField({ field: field, message: 'Invalid email.' });
-		}	
+		}
 	},
 
 	url: function(field) {
 		if(!field.isEmpty && this.isValidField(field.object) && field.object.hasClass('validate-url') && !this.isValidUrl(field.val)) {
 			this.markAsErrorField({ field: field, message: 'Invalid url.' });
-		}	
+		}
 	},
 
 	number: function(field, minlength) {
 		if(!field.isEmpty && this.isValidField(field.object) && field.object.hasClass('validate-number')) {
 			if(!this.isValidNumber(field.val)) {
 				this.markAsErrorField({ field: field, message: 'Should be a numeric.' });
-			} 
-		} 
+			}
+		}
 	},
 
 	date: function(field) {
@@ -103,6 +103,20 @@ var validate = {
 	pastDate: function(field) {
 		if(!field.isEmpty && this.isValidField(field.object) && field.object.hasClass('validate-past-date') && !this.isValidPastDate(field.val)) {
 			this.markAsErrorField({ field: field, message: 'Invalid Date.' });
+		}
+	},
+
+	isEmpty: function(field) {
+		var $field = $(field),
+				fieldType = $(field).prop('type');
+
+		if( $.inArray(fieldType, ['text', 'textarea']) > -1 ) {
+			return ($field.val().trim().length === 0);
+		} else if (fieldType === 'checkbox') {
+			return !$field.prop('checked');
+		} else {
+			console.log(fieldType + ' is not supported')
+			return true;
 		}
 	},
 
@@ -129,17 +143,17 @@ var validate = {
 		// MM/DD/YYYY
 		// Also separates date into month, day, and year variables
 		var datePat = /^(\d{2,2})(\/)(\d{2,2})\2(\d{4}|\d{4})$/;
-	 
+
 		var matchArray = dateStr.match(datePat); // is the format ok?
-		if (matchArray == null) 
+		if (matchArray == null)
 		{
 			return false;
 		}
-	 
+
 		month = matchArray[1]; // parse date into variables
 		day = matchArray[3];
 		year = matchArray[4];
-		if (month < 1 || month > 12) 
+		if (month < 1 || month > 12)
 		{ 
 			// check month range
 			return false;
@@ -148,15 +162,15 @@ var validate = {
 		{
 			return false;
 		}
-		if ((month==4 || month==6 || month==9 || month==11) && day==31) 
+		if ((month==4 || month==6 || month==9 || month==11) && day==31)
 		{
 			return false;
 		}
-		if (month == 2) 
-		{ 
+		if (month == 2)
+		{
 			// check for february 29th
 			var isleap = (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0));
-			if (day>29 || (day==29 && !isleap)) 
+			if (day>29 || (day==29 && !isleap))
 			{
 				return false;
 			}
@@ -168,5 +182,4 @@ var validate = {
 		// First check whether it is a valid date or not
 		return (this.isValidDate && ( new Date(dateStr) < new Date() ) );
 	}
-
 };
