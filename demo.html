@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Validate Form - Demo</title>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="validate-form.jquery.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+</head>
+<body>
+  <nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">Brand</a>
+      </div>
+
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <!-- <li class="active"><a href="#">Link</a></li> -->
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-5">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            Your Information
+          </div>
+          <div class="panel-body">
+            <form class="form-horizontal" role="form">
+              <div class="form-group">
+                <label class="col-sm-3">First Name</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control validate-required"></input>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-sm-3">Last Name</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control validate-required"></input>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-sm-3">Email</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control validate-email"></input>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-sm-3">Your Website</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control validate-url"></input>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-sm-3">Age</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control validate-number"></input>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-sm-3">Date of Birth</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control validate-date validate-past-date"></input>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-9">
+                  <input type="submit" class="btn btn-default" />
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-7">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            HTML
+          </div>
+          <div class="panel-body">
+            <pre class="pre-scrollabfle">&lt;form&gt;
+  &lt;label&gt;First Name&lt;/label&gt;
+  &lt;input type="text" class="validate-required"&gt;&lt;/input&gt;
+  
+  &lt;label class="col-sm-2"&gt;Last Name&lt;/label&gt;
+  &lt;input type="text" class="form-control validate-required"&gt;&lt;/input&gt;
+
+  &lt;label class="col-sm-2"&gt;Email&lt;/label&gt;
+  &lt;input type="text" class="form-control validate-email"&gt;&lt;/input&gt;
+
+  &lt;label class="col-sm-2"&gt;Your Website&lt;/label&gt;
+  &lt;input type="text" class="form-control validate-url"&gt;&lt;/input&gt;
+
+  &lt;label class="col-sm-2"&gt;Age&lt;/label&gt;
+  &lt;input type="text" class="form-control validate-number"&gt;&lt;/input&gt;
+
+  &lt;label class="col-sm-2"&gt;Date of Birth&lt;/label&gt;
+  &lt;input type="text" class="form-control validate-date validate-past-date"/&gt;
+
+  &lt;input type="submit" class="btn btn-default" /&gt;
+&lt;/form&gt;
+            </pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    $(function(){  
+      var selector = 'form';
+        $(selector).submit(function(){  
+          if(validateForm(selector)) {
+            alert('No errors');
+            return true;
+          } else {  
+            // Ah! I think there are some errors in your input
+            return false; 
+          }  
+        });  
+     });  
+  </script>
+</body>
+</html>
