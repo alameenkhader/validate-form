@@ -12,7 +12,7 @@ Class:
 *   validate-email
 *   validate-url
 *   validate-date
-*   validate-past-date # For dates such as birthdays, must be a future date. right?
+*   validate-past-date # For dates such as birthdays, must be a past date. right?
 
 example:  
 HTML:
